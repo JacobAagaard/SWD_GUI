@@ -6,6 +6,31 @@ using System.Threading.Tasks;
 
 namespace DeptBook.Model
 {
+    class DBModel
+    {
+        private Deptbook dp;
+        public DBModel()
+        {
+            dp = new DeptBook();
+        }
+
+        public void AddDebitor(Debitor debitor)
+        {
+            dp.AddDebitor(debitor);
+        }
+
+        public void NewTransaction(int ID, Transaction transaction)
+        {
+            dp.NewTransaction(ID, transaction);
+        }
+
+        public void GetBalanceByID(int id)
+        {
+            dp.GetBalanceByID(id);
+        }
+
+    }
+
     class Debitor
     {
         public string Name { get; set; }
