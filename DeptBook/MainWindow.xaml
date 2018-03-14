@@ -6,7 +6,16 @@
         xmlns:local="clr-namespace:DeptBook"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        
+    <Grid DataContext="{Binding Path=DBViewModel}">
+        <DataGrid Name="MainGrid" Margin="0,0,0,79.5">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="ID" Binding="{Binding Path=}" />
+                <DataGridTextColumn Header="Name" Binding="{Binding Path=}" />
+                <DataGridTextColumn Header="Dept" Binding="{Binding Path=}" />
+            </DataGrid.Columns>
+        </DataGrid>
+        <Button Name="btnTransaction" Command="{Binding Path=}" Content="New Transaction" HorizontalAlignment="Left" Margin="131,375,0,0" VerticalAlignment="Top" Width="98"/>
+        <Button Name="btnDebitor" Command="{Binding Path=}" Content="New Debitor" HorizontalAlignment="Left" Margin="51,375,0,0" VerticalAlignment="Top" Width="75"/>
+        <Button Name="btnDeeperLook" Command="{Binding Path=}" Content="Deeper look" HorizontalAlignment="Left" Margin="234,375,0,0" VerticalAlignment="Top" Width="75"/>
     </Grid>
 </Window>
