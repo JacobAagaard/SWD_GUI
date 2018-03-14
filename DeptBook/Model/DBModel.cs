@@ -29,6 +29,10 @@ namespace DeptBook.Model
             dp.GetBalanceByID(id);
         }
 
+        public List<Debitor> GetDebitorList()
+        {
+            return dp.debitors;
+        }
     }
 
     class Debitor
@@ -52,14 +56,17 @@ namespace DeptBook.Model
     class DeptBook
     {
         private Dictionary<int, List<Transaction>> transactions;
-
+        public List<Debitor> debitors { get; private set; }
         public DeptBook()
         {
+            debitors = new List<Debitor>();
             transactions = new Dictionary<int, List<Transaction>>();
         }
 
-        public void AddDebitor(Debitor debitor)
+        public void AddDebitor(string Name)
         {
+            Debitor debitor = new Debitor{Name = Name};
+            debitors.Add(debitor);
             transactions.Add(debitor.GetID(), new List<Transaction>());
         }
 
@@ -81,6 +88,11 @@ namespace DeptBook.Model
             }
 
             return amount;
+        }
+
+        public Debitor GetDebitorByID(int id)
+        {
+            
         }
     }
 
