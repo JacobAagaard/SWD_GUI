@@ -8,7 +8,7 @@ namespace DeptBook.Model
 {
     class DBModel
     {
-        private Deptbook dp;
+        private DeptBook dp;
         public DBModel()
         {
             dp = new DeptBook();
@@ -16,7 +16,7 @@ namespace DeptBook.Model
 
         public void AddDebitor(Debitor debitor)
         {
-            dp.AddDebitor(debitor);
+            dp.AddDebitor(debitor.Name);
         }
 
         public void NewTransaction(int ID, Transaction transaction)
@@ -65,7 +65,7 @@ namespace DeptBook.Model
 
         public void AddDebitor(string Name)
         {
-            Debitor debitor = new Debitor{Name = Name};
+            Debitor debitor = new Debitor(Name);
             debitors.Add(debitor);
             transactions.Add(debitor.GetID(), new List<Transaction>());
         }
@@ -92,7 +92,15 @@ namespace DeptBook.Model
 
         public Debitor GetDebitorByID(int id)
         {
-            
+            var debitorByID = new Debitor("");
+            foreach(var debitor in debitors)
+            {
+                if(debitor.GetID() == id)
+                    debitorByID = debitor;
+                else
+                    Console.WriteLine("ID was not found in " + nameof(GetDebitorByID));
+            }
+            return debitorByID;
         }
     }
 

@@ -17,52 +17,42 @@ namespace DeptBook.ViewModel
         }
 
         DBModel dbModel = new DBModel();
-
-        class Debitor
-        {
-            public string Name
-            {
-                get => dbModel.Name;    //dbModel.Debitor.Name; ?
-                set
-                {
-                    if (value != dbModel.Name)
-                    {
-                        dbModel.Name = value;
-                        OnPropertyChanged();
-                    }
-
-                }
-            }
-            int TotalBalance;
-            int ID;
-            int CalcBalance()
-            {
-                return 0;
-            }
-        }
-        internal class Transaction
-        {
-            public int Amount
-            {
-                get => dbModel.Amount;  //dbModel.Transaction.Amount; ?
-            }
-        }
-
-        Debitor debitor = new Debitor();
+        Debitor debitor = new Debitor("");
+        Transaction transaction = new Transaction();
         
-        //New Debitor
+        public string Name
+        {
+            get => debitor.Name;
+            set
+            {
+                debitor.Name = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public int Amount
+        {
+            get => transaction.Amount;
+            set
+            {
+                transaction.Amount = value;
+                OnPropertyChanged();
+            }
+        }
+
         private ICommand _addDebitorCommand;
         public ICommand AddDebitorCommand => 
             _addDebitorCommand ?? (_addDebitorCommand = new DelegateCommand(AddDebitor, AddDebitorCanExecute));
 
         private bool AddDebitorCanExecute()
         {
-            return (!String.IsNullOrEmpty(debitor.Name));
+            return (!String.IsNullOrEmpty(debitor.Name));   //Debitor name must me entered before adding.
         }
 
         private void AddDebitor()
         {
-            throw new NotImplementedException();
+            dbModel.AddDebitor(debitor);
+            OnPropertyChanged("AddDebitor");
         }
 
         private ICommand _newTransactionCommand;
@@ -71,12 +61,18 @@ namespace DeptBook.ViewModel
 
         private bool NewTransactionCanExecute()
         {
-            throw new NotImplementedException();
+            return (transaction.Amount != 0);    // The transaction amount can be +/-, but not 0.
         }
 
         private void NewTransaction()
         {
-            throw new NotImplementedException();
+            foreach (var debitor in dbModel.GetDebitorList())
+            {
+                if(this.debitor.GetID() == debitor.GetID()) //Virker måske ikke. Har endnu ikke testet.
+                    dbModel.NewTransaction(debitor.GetID(), transaction);                    
+
+                OnPropertyChanged("NewTransaction");
+            }
         }
     }
 }
